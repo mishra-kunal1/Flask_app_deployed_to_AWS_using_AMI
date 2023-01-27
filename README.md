@@ -61,7 +61,7 @@ Webapp
 ## Build Instructions
 Pre-Requisites: Need to have postman installed
 -  Clone this repository  into the local system 
--  Go to the folder Flask_app_deployed_to_AWS_using_AMI/webapp
+-  Go to the folder Flask_app_deployed_to_AWS_using_AMI webapp
 -  Download all the packages listed in requirements.txt using pip
 -  Run WebappApplication in your local server by running the command flask run app.py
 
