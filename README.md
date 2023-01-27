@@ -34,8 +34,8 @@ Tools and Technologies
 | Webapp               | Python, Flask, PostgreSQL, DynamoDB                    |
 | CI/CD                | Github Worflow                                         |
 | Alerting and logging | statsd, Cloud Watch, SNS, SES, Lambda                  |
-| Security             | KMS and EBS for encryption of RDS and  EC2, and SSL    |
-                         certificate for domain name using Route53 and DNS.     |
+| Security             | KMS and EBS for encryption of RDS and  EC2, and SSL certificate for domain name using Route53 and DNS.   |
+                      
 
 
 Infrastructure-setup
