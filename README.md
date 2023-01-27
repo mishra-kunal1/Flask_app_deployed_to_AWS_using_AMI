@@ -1,4 +1,4 @@
-# Flask_deployed_to_AWS_using_AMI
+# Flask_app_deployed_to_AWS_using_AMI
 
 
 ---------------------------------------------------------------
