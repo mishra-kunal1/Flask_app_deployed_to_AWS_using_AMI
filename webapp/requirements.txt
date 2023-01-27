@@ -1,0 +1,12 @@
+flask
+flask_restful
+flask-marshmallow
+Flask-HTTPAuth
+flask-sqlalchemy
+SQLAlchemy
+bcrypt
+psycopg2-binary
+flask_api
+boto3
+statsd
+watchtower
