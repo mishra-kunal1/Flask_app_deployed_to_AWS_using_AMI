@@ -5,7 +5,7 @@
 
 ### Summary
 
-This is a REST based APIs based web application that allowed users to register themselves and upload thier files in any format to s3 bucket built with Flask, PostgreSQL boot and deployed on AWS
+This is a RESTful APIs based web application that allowed users to register themselves and upload thier files in any format to s3 bucket built with Flask, PostgreSQL, and deployed on AWS
 
 -   EC2 instances are built on a custom
     [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)
@@ -19,7 +19,7 @@ This is a REST based APIs based web application that allowed users to register t
     to send a mail to user once he registers.
     [SES](https://aws.amazon.com/ses/) and
     [SNS](https://aws.amazon.com/sns/)
--   The application is automaticaly deployed using Github workflow aonce the pull request is merged.
+-   The application is automaticaly tested using pytest and deployed using Github workflow once the pull request is merged.
 
 ### Architecture Diagram
 
@@ -31,18 +31,19 @@ Tools and Technologies
                           
 | Infrastructure       | VPC, ELB, EC2, Route53, Cloud formation, Shell, Packer |
 |----------------------|--------------------------------------------------------|
-| Webapp               | Python, Flask, PostgreSQL, DynamoDB                        |
-| CI/CD                | Circle CI, Github Worflow                             |
+| Webapp               | Python, Flask, PostgreSQL, DynamoDB                    |
+| CI/CD                | Github Worflow                                         |
 | Alerting and logging | statsd, Cloud Watch, SNS, SES, Lambda                  |
-| Security             | WAF                                                    |
+| Security             | KMS and EBS for encryption of RDS and  EC2, and SSL    |
+                         certificate for domain name using Route53 and DNS.     |
 
 
 Infrastructure-setup
 --------------------
 
--   Create the networking setup using cloud formation and aws cli
+-   Create the networking setup using AWS CloudFormation and AWS CLI
 -   Create the required IAM policies and users
--   Setup Load Balancers, Route53, DynamoDB, SNS, SES, RDS, WAF
+-   Setup Load Balancers, Route53, DynamoDB, SNS, SES, RDS
 
 Webapp
 ------
@@ -52,16 +53,14 @@ Webapp
 -   Secured the application with Basic
     [authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
     to retrieve user information
--   Storing the files uplaoded by users in S3 bucket and retrieving as a object.
--   Generating [Pre-signed
-    URL](https://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObjectJavaSDK.html)
-    to with expiration of 3 minutes
+-   Storing the files uplaoded by users in S3 bucket and retrieving as an object.
+-   Generating [verification URL] with expiration of 3 minutes using DynamoDB
 
 
 ## Build Instructions
 Pre-Requisites: Need to have postman installed
 -  Clone this repository  into the local system 
--  Go to the folder Flask_app_deployed_to_AWS_using_AMI webapp
+-  Go to the folder Flask_app_deployed_to_AWS_using_AMI /webapp
 -  Download all the packages listed in requirements.txt using pip
 -  Run WebappApplication in your local server by running the command flask run app.py
 
@@ -72,26 +71,25 @@ CI/CD
 
 -   After pushing the code to github the workflow will run the unit test case to check the working of app.
 -   After merging the code the github workflow will create a custom AMI and push it into EC2 instance.
--   The artifact generated is stored S3 bucket and deployed to an
+-   The artifact generated is stored in S3 bucket and deployed to an
     autoscaling group. ![ci-cd](https://user-images.githubusercontent.com/42703011/92802596-a7858700-f384-11ea-89db-85f0f8de8bc7.png)
 
 
 Auto scaling groups
 -------------------
 
--   Created auto scaling groups to scale to the application to handle
+-   Created auto scaling groups to scale the EC2 instances for the application to handle
     the webtraffic and keep the costs low when traffic is low
--   Created cloud watch alarms to scale up and scale down the EC2
-    instances
+-   Created cloud watch alarms to scale up and scale down the EC2 instances
 
 Serverless computing
 --------------------
 
 -   Created a pub/sub system with SNS and lambda function
--   When the user request for a password reset a message is published to
+-   When the user registers, a message is published to
     the SNS topic.
 -   The lambda function checks for the entry of the email in DynamoDB if
-    it has no entry then it inserts a record with a TTL of 15 minutes
+    it has no entry then it inserts a record with a TTL of 5 minutes
     and sends the notification to the user with SES ![alt
     text]![lambda](https://user-images.githubusercontent.com/42703011/92802718-c126ce80-f384-11ea-843f-a06d1267bdd9.png)
 
