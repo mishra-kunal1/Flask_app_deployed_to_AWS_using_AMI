@@ -53,11 +53,11 @@ Parameters:
   DatabaseName:
     Description: Database Instance Name
     Type: String
-    Default: csye6225
+    Default: CloudDatabase
   DatabaseUserName:
     Description: Database Instance Username
     Type: String
-    Default: csye6225
+    Default: CloudUser
   DatabasePassword:
     Description: Database Instance Password
     Type: String
@@ -71,7 +71,7 @@ Parameters:
   S3BucketName:
     Description: S3 Bucket Name
     Type: String
-    Default: s3csye6225mishrakunal
+    Default: s3mishrakunal
 
   KeyName:
     Description: The SSH key name required for login using SSH
@@ -626,7 +626,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      TableName: csye-6225
+      TableName: DynamoTable
       TimeToLiveSpecification:
         AttributeName: TimeToLive
         Enabled: true
