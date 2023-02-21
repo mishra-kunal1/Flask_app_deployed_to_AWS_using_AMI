@@ -371,7 +371,7 @@ Resources:
   IAMRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: EC2-CSYE6225
+      RoleName: EC2-Role
       Description: Webapp and S3 IAM Role
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
@@ -384,7 +384,7 @@ Resources:
               - "sts:AssumeRole"
       Tags:
         - Key: IAM Role
-          Value: WebApp S3 IAM - EC2-CSYE6225
+          Value: WebApp S3 IAM - EC2-Role
 
   RoleInstanceProfile:
     Type: "AWS::IAM::InstanceProfile"
